@@ -1,24 +1,52 @@
-import logo from './logo.svg';
+import React from 'react';
+import Header from './Header.js';
+import Main from './Main.js';
+import Footer from './Footer.js';
+import CityInput from './CityInput';
 import './App.css';
+import axios from '.axios';
 
-function App() {
+class app extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      city: '',
+      cityData: [],
+    }
+  }
+}
+
+// city input
+handleCityInput = (e) => {
+  e.preventDefault();
+  this.setState({
+    city: e.target.value
+  })
+}
+
+getCityData = async (e) => {
+  e.preventDefault();
+  console.log(this.state.city);
+  let url = `${process.env.REACT_APP_LOCATIONIQ_API_KEY}${this.state.city}`
+  let cityData = await axios.get(url);
+}
+
+render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Header
+
+    />
+    <CityInput
+      handleCityInput={this.handleCityInput}
+    />
+    <Main
+
+    />
+    <Footer
+
+    />
+    </>
   );
 }
 
