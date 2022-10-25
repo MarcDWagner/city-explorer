@@ -23,10 +23,10 @@ class App extends React.Component {
   // city input
   handleCityInput = (e) => {
     e.preventDefault();
+    // console.log(e.target.value);
     this.setState({
       city: e.target.value
     })
-    console.log(e.target.value);
   }
 
   // async data from site
@@ -58,15 +58,13 @@ class App extends React.Component {
   getMapData = async () => {
     let mapUrl = `https://us1.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.lat},${this.state.lon}&zoom=12`
 
-    let findMap = await axios.get(mapUrl);
-    const map = findMap.config.url;
-
     this.setState({
-      mapData: map
+      mapData: mapUrl
     })
   }
 
   render() {
+    console.log(this.state);
     return (
       <>
         <Header
@@ -74,9 +72,11 @@ class App extends React.Component {
         />
         <CityInput
           handleCityInput={this.handleCityInput}
+          getCityData={this.getCityData}
         />
         <Main
           cityData={this.state.cityData}
+          map={this.state.mapData}
         />
         <Footer
 

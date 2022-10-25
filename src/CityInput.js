@@ -12,10 +12,10 @@ class CityInput extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.props.handleCityInput}>
+      <Form onSubmit={this.props.getCityData}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>City</Form.Label>
-          <Form.Control type="text" placeholder="Enter city" />
+          <Form.Control onChange={this.props.handleCityInput} type="text" placeholder="Enter city" />
         </Form.Group>
             <Button variant="primary" type="submit">
               Explore!
