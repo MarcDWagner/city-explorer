@@ -10,7 +10,11 @@ render() {
   return (
     <Form>
          <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>City</Form.Label>
+        <Form.Label>City
+      <Button variant="primary" type="submit">
+        Explore!
+      </Button>
+        </Form.Label>
         <Form.Control type="text" placeholder="Enter city" />
       </Form.Group>
     </Form>
