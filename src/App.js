@@ -23,7 +23,6 @@ class App extends React.Component {
   // city input
   handleCityInput = (e) => {
     e.preventDefault();
-    // console.log(e.target.value);
     this.setState({
       city: e.target.value
     })
@@ -35,36 +34,40 @@ class App extends React.Component {
     let response;
     try {
       let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`
-      // console.log(url);
       response = await axios.get(url);
       let location = response.data[0];
+      // console.log(location);
+
+      let mapUrl = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${location.lat},${location.lon}&zoom=12`
 
       this.setState({
         cityData: location,
         error: false,
         lat: location.lat,
         lon: location.lon,
-      }, () => {
-        this.getMapData();
-      });
-      
+        mapData: mapUrl
+      },
+      //  () => {
+        //   this.getMapData();
+        // }
+        );
+        console.log(mapUrl);
+
     } catch (error) {
       this.setState({
         error: true,
         errorMessage: error.message
       })
-    }  
+    }
   }
-  getMapData = async () => {
-    let mapUrl = `https://us1.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.lat},${this.state.lon}&zoom=12`
+  // getMapData = async () => {
 
-    this.setState({
-      mapData: mapUrl
-    })
-  }
+  //   this.setState({
+  //     mapData: mapUrl
+  //   })
+  // }
 
   render() {
-    console.log(this.state);
     return (
       <>
         <Header
