@@ -4,6 +4,7 @@ import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
 import CityInput from './CityInput';
+import Weather from './Weather';
 import './App.css';
 
 class App extends React.Component {
@@ -76,6 +77,8 @@ class App extends React.Component {
         <CityInput
           handleCityInput={this.handleCityInput}
           getCityData={this.getCityData}
+        />
+        <Weather
         />
         <Main
           cityData={this.state.cityData}
