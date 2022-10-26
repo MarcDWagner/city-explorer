@@ -1,8 +1,12 @@
 import React from 'react';
 import Stack from 'react-bootstrap/Stack'
 import Image from 'react-bootstrap/Image'
+import Alert from 'react-bootstrap/Alert';
+
 
 class Main extends React.Component {
+  
+
   render() {
     return(
       <main>
@@ -15,9 +19,11 @@ class Main extends React.Component {
       </Stack>
         <article>
         </article>
+        <Alert variant="danger" onClose={this.props.closeErrorAlert} dismissable>
+          <Alert.Heading>{this.props.errorMessage}</Alert.Heading>
+        </Alert>
       </main>
     )
-   
   }
 };
 

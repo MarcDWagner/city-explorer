@@ -1,15 +1,15 @@
-import React from 'react';
+// import React from 'react';
 
-class Weather extends React.Component {
+// class Weather extends React.Component {
 
 
-  render(){
-    return (
+//   render(){
+//     return (
       
-    )
-  }
-}
+//     )
+//   }
+// }
 
 
 
-export default Weather;
+// export default Weather;
