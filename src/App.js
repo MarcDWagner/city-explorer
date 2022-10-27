@@ -30,18 +30,18 @@ class App extends React.Component {
     })
   }
 
-  // openErrorAlert = () => {
-  //   this.setState({
-  //     errorAlert: true
-  //   })
-  // }
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
 
-  // closeErrorAlert = () => {
-  //   this.setState({
-  //     errorAlert: false
-  //   })
-  // }
+    let cityData = await axios.get(url);
 
+    console.log(cityData.data);
+
+
+  }
+
+  
   // async data from site
   getCityData = async (e) => {
     e.preventDefault();
@@ -61,10 +61,10 @@ class App extends React.Component {
         lon: location.lon,
         mapData: mapUrl
       },
-
-        );
-        console.log(mapUrl);
-
+      
+      );
+      // console.log(mapUrl);
+      
     } catch (error) {
       // this.openErrorAlert();
       this.setState({
@@ -74,16 +74,17 @@ class App extends React.Component {
       })
     }
   }
-
+  
   render() {
     return (
       <>
         <Header
 
-        />
+/>
         <CityInput
           handleCityInput={this.handleCityInput}
           getCityData={this.getCityData}
+          handleSubmit={this.handleSubmit}
         />
         {/* <Weather
         /> */}
@@ -94,12 +95,23 @@ class App extends React.Component {
           // errorAlert={this.state.errorAlert}
           // closeErrorAlert={this.state.closeErrorAlert}
           // openErrorAlert={this.state.openErrorAlert}
-        />
+          />
         <Footer
 
-        />
+/>
       </>
     );
   }
 }
 export default App;
+  // openErrorAlert = () => {
+  //   this.setState({
+  //     errorAlert: true
+  //   })
+  // }
+  
+  // closeErrorAlert = () => {
+  //   this.setState({
+  //     errorAlert: false
+  //   })
+  // }

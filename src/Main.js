@@ -19,7 +19,7 @@ class Main extends React.Component {
       </Stack>
         <article>
         </article>
-        <Alert variant="danger" onClose={this.props.closeErrorAlert} dismissable>
+        <Alert variant="danger" onClose={this.props.closeErrorAlert}>
           <Alert.Heading>{this.props.errorMessage}</Alert.Heading>
         </Alert>
       </main>
