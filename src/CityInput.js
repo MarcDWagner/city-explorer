@@ -5,10 +5,6 @@ import Button from 'react-bootstrap/Button';
 
 class CityInput extends React.Component {
 
-  // handleChange = (e) => {
-  //   e.preventDefault();
-  //   this.props.handleCityInput(e.target.value);
-  // }
 
   render() {
     return (
