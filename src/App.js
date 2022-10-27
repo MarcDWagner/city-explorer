@@ -19,6 +19,7 @@ class App extends React.Component {
       mapData: '',
       lat: '',
       lon: '',
+      weatherData: []
     }
   }
 
@@ -30,16 +31,6 @@ class App extends React.Component {
     })
   }
 
-  handleSubmit = async (e) => {
-    e.preventDefault();
-    let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
-
-    let cityData = await axios.get(url);
-
-    console.log(cityData.data);
-
-
-  }
 
   
   // async data from site
@@ -66,21 +57,38 @@ class App extends React.Component {
       // console.log(mapUrl);
       
     } catch (error) {
-      // this.openErrorAlert();
       this.setState({
         error: true,
-        // errorAlert: true,
         errorMessage: `An error occurred: ${error.response.status}`
       })
     }
   }
-  
+
+   // ** front-end axios.get(http://localhost:3001/weather?cityName=Seattle&lat=anothervalue&lon=anothervalue)
+  getWeatherData = async (location) => {
+    try {
+      let url = `${process.env.REACT_APP_SERVER}/weather?cityName=${this.state.city}&lat=${location.lat}&lon=${location.lon}`
+
+      console.log('weather url', url)
+
+      let weatherData = await axios.get(url)
+      
+      this.setState({
+        weatherData: weatherData.data
+      })
+    } catch (error) {
+      this.setState({
+        error: true,
+        errorMessage: `An error occurred: ${error.response.status}`
+      })
+    }
+  }
+
   render() {
     return (
       <>
         <Header
-
-/>
+        />
         <CityInput
           handleCityInput={this.handleCityInput}
           getCityData={this.getCityData}
@@ -97,21 +105,10 @@ class App extends React.Component {
           // openErrorAlert={this.state.openErrorAlert}
           />
         <Footer
-
-/>
+        />
       </>
     );
   }
 }
 export default App;
-  // openErrorAlert = () => {
-  //   this.setState({
-  //     errorAlert: true
-  //   })
-  // }
-  
-  // closeErrorAlert = () => {
-  //   this.setState({
-  //     errorAlert: false
-  //   })
-  // }
+
