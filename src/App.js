@@ -4,7 +4,7 @@ import Header from './Header.js';
 import Main from './Main.js';
 import Footer from './Footer.js';
 import CityInput from './CityInput';
-// import Weather from './Weather';
+import Weather from './Weather';
 import './App.css';
 
 class App extends React.Component {
@@ -19,7 +19,10 @@ class App extends React.Component {
       mapData: '',
       lat: '',
       lon: '',
-      weatherData: []
+      weatherData: [],
+      movieError: false,
+      movieErrorMessage: '',
+      movie: []
     }
   }
 
@@ -52,8 +55,8 @@ class App extends React.Component {
         lon: location.lon,
         mapData: mapUrl
       },
-      
       );
+      this.getWeatherData(location);
       // console.log(mapUrl);
       
     } catch (error) {
@@ -61,26 +64,29 @@ class App extends React.Component {
         error: true,
         errorMessage: `An error occurred: ${error.response.status}`
       })
+
     }
   }
+
+  
 
    // ** front-end axios.get(http://localhost:3001/weather?cityName=Seattle&lat=anothervalue&lon=anothervalue)
   getWeatherData = async (location) => {
     try {
-      let url = `${process.env.REACT_APP_SERVER}/weather?cityName=${this.state.city}&lat=${location.lat}&lon=${location.lon}`
+      let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lat=${location.lat}&lon=${location.lon}`
 
-      console.log('weather url', url)
+      console.log('weather url', url);
 
       let weatherData = await axios.get(url)
-      
+
       this.setState({
         weatherData: weatherData.data
-      })
+      });
     } catch (error) {
       this.setState({
         error: true,
         errorMessage: `An error occurred: ${error.response.status}`
-      })
+      });
     }
   }
 
@@ -94,7 +100,10 @@ class App extends React.Component {
           getCityData={this.getCityData}
           handleSubmit={this.handleSubmit}
         />
-        {/* <Weather
+        <Weather
+        weatherData={this.state.weatherData}
+        />
+        {/* <Movie
         /> */}
         <Main
           cityData={this.state.cityData}
