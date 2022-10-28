@@ -94,9 +94,6 @@ class App extends React.Component {
           getCityData={this.getCityData}
           handleSubmit={this.handleSubmit}
         />
-        <Weather
-        weatherData={this.state.weatherData}
-        />
         {/* <Movie
         /> */}
         <Main
@@ -107,6 +104,9 @@ class App extends React.Component {
           // closeErrorAlert={this.state.closeErrorAlert}
           // openErrorAlert={this.state.openErrorAlert}
           />
+        <Weather
+        weatherData={this.state.weatherData}
+        />
         <Footer
         />
       </>
