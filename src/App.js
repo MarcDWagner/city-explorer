@@ -71,7 +71,7 @@ class App extends React.Component {
    // ** front-end axios.get(http://localhost:3001/weather?cityName=Seattle&lat=anothervalue&lon=anothervalue)
   getWeatherData = async function(){
     try {
-      let weatherData = await axios.get(`${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lat=${this.state.lat}&lon=${this.state.lon}`)
+      let weatherData = await axios.get(`${process.env.REACT_APP_SERVER}/weather?lat=${this.state.lat}&lon=${this.state.lon}`)
       this.setState({
         weatherError: false,
         weatherData: weatherData.data
@@ -79,7 +79,7 @@ class App extends React.Component {
     } catch (error) {
       this.setState({
         weatherError: true,
-        weatherErrorMessage: `An error occurred: ${error.response.status}`
+        weatherErrorMessage: `An error occurred.`
       })
     }
   }
