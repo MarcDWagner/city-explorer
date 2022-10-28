@@ -20,9 +20,11 @@ class App extends React.Component {
       lat: '',
       lon: '',
       weatherData: [],
-      movieError: false,
-      movieErrorMessage: '',
-      movie: []
+      weatherError: false,
+      weatherErrorMessage: ''
+      // movieError: false,
+      // movieErrorMessage: '',
+      // movie: []
     }
   }
 
@@ -33,10 +35,8 @@ class App extends React.Component {
       city: e.target.value
     })
   }
-
-
   
-  // async data from site
+  // async data from locationiq site
   getCityData = async (e) => {
     e.preventDefault();
     let response;
@@ -54,39 +54,33 @@ class App extends React.Component {
         lat: location.lat,
         lon: location.lon,
         mapData: mapUrl
-      },
-      );
-      this.getWeatherData(location);
-      // console.log(mapUrl);
-      
+      }, this.makeApiCall);
+ 
     } catch (error) {
       this.setState({
         error: true,
         errorMessage: `An error occurred: ${error.response.status}`
       })
-
     }
   }
 
-  
+  makeApiCall =function() {
+    this.getWeatherData();
+  }
 
    // ** front-end axios.get(http://localhost:3001/weather?cityName=Seattle&lat=anothervalue&lon=anothervalue)
-  getWeatherData = async (location) => {
+  getWeatherData = async function(){
     try {
-      let url = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lat=${location.lat}&lon=${location.lon}`
-
-      console.log('weather url', url);
-
-      let weatherData = await axios.get(url)
-
+      let weatherData = await axios.get(`${process.env.REACT_APP_SERVER}/weather?lat=${this.state.lat}&lon=${this.state.lon}`)
       this.setState({
+        weatherError: false,
         weatherData: weatherData.data
-      });
+      })
     } catch (error) {
       this.setState({
-        error: true,
-        errorMessage: `An error occurred: ${error.response.status}`
-      });
+        weatherError: true,
+        weatherErrorMessage: `An error occurred.`
+      })
     }
   }
 
@@ -100,9 +94,6 @@ class App extends React.Component {
           getCityData={this.getCityData}
           handleSubmit={this.handleSubmit}
         />
-        <Weather
-        weatherData={this.state.weatherData}
-        />
         {/* <Movie
         /> */}
         <Main
@@ -113,6 +104,9 @@ class App extends React.Component {
           // closeErrorAlert={this.state.closeErrorAlert}
           // openErrorAlert={this.state.openErrorAlert}
           />
+        <Weather
+        weatherData={this.state.weatherData}
+        />
         <Footer
         />
       </>
