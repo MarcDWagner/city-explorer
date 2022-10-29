@@ -13,7 +13,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       city: '',
-      cityData: {},
+      cityData: [],
       error: false,
       // errorAlert: false,
       errorMessage: '',
@@ -64,8 +64,7 @@ class App extends React.Component {
       })
     }
   }
-
-  makeApiCall =function() {
+  makeApiCall = function() {
     this.getWeatherData();
     this.getMovieData();
   }
@@ -89,11 +88,11 @@ class App extends React.Component {
 
   getMovieData = async function(){
     try {
-      let movieData = await axios.get(`${process.env.REACT_APP_SERVER}/movies?${this.state.city}`)
+      let movieData = await axios.get(`${process.env.REACT_APP_SERVER}/movies?city=${this.state.city}`)
       console.log(movieData);
       this.setState({
         movieError: false,
-        movieData: movieData.results
+        movieData: movieData.data
       })
     } catch (error) {
       this.setState({
@@ -111,7 +110,7 @@ class App extends React.Component {
         <CityInput
           handleCityInput={this.handleCityInput}
           getCityData={this.getCityData}
-          handleSubmit={this.handleSubmit}
+          // handleSubmit={this.handleSubmit}
         />
         <Main
           cityData={this.state.cityData}
@@ -123,9 +122,11 @@ class App extends React.Component {
           />
         <Weather
         weatherData={this.state.weatherData}
+        errorMessage={this.state.weatherErrorMessage}
         />
         <Movie 
         movieData={this.state.movieData}
+        errorMessage={this.state.movieErrorMessage}
         />
         <Footer
         />
