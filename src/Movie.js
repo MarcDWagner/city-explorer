@@ -8,22 +8,22 @@ import Col from 'react-bootstrap/Col';
 class Movie extends React.Component {
 
   render() {
-    let movieDataParse = this.props.movieData.map((movie) => {
+    let movieDataParse = this.props.movieData.map((mov) => (
       <Col>
         <Card style={{ width: '18rem' }}>
-          <Card.Img variant="top" src={`https://image.tmdb.org/t/p/original/${movie.img}`} />
-          <Card.Body>
-            <Card.Title>{movie.title}</Card.Title>
+          <Card.Img variant="top" src={`https://image.tmdb.org/t/p/original/${mov.poster}`} />
+            <Card.Title>{mov.title}</Card.Title>
             <Card.Text>
-              {movie.overview}
+              {mov.overview}
             </Card.Text>
-          </Card.Body>
+          <Card.Body>
           <ListGroup className="list-group-flush">
-            <ListGroup.Item>{movie.release}</ListGroup.Item>
+            <ListGroup.Item>{mov.release}</ListGroup.Item>
           </ListGroup>
+          </Card.Body>
         </Card>
       </Col>
-    })
+  ))
     return (
       <Container id='contain' fluid>
         <Row id='row' sm={1} md={2} lg={4} xxl={5} className='g-4'>
