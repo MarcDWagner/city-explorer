@@ -5,6 +5,7 @@ import Main from './Main.js';
 import Footer from './Footer.js';
 import CityInput from './CityInput';
 import Weather from './Weather';
+import Movie from './Movie';
 import './App.css';
 
 class App extends React.Component {
@@ -12,7 +13,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       city: '',
-      cityData: {},
+      cityData: [],
       error: false,
       // errorAlert: false,
       errorMessage: '',
@@ -21,10 +22,10 @@ class App extends React.Component {
       lon: '',
       weatherData: [],
       weatherError: false,
-      weatherErrorMessage: ''
-      // movieError: false,
-      // movieErrorMessage: '',
-      // movie: []
+      weatherErrorMessage: '',
+      movieData: [],
+      movieError: false,
+      movieErrorMessage: ''
     }
   }
 
@@ -63,9 +64,9 @@ class App extends React.Component {
       })
     }
   }
-
-  makeApiCall =function() {
+  makeApiCall = function() {
     this.getWeatherData();
+    this.getMovieData();
   }
 
    // ** front-end axios.get(http://localhost:3001/weather?cityName=Seattle&lat=anothervalue&lon=anothervalue)
@@ -79,7 +80,24 @@ class App extends React.Component {
     } catch (error) {
       this.setState({
         weatherError: true,
-        weatherErrorMessage: `An error occurred.`
+        weatherErrorMessage: `A weather error has occurred.`
+      })
+    }
+  }
+// http://localhost:3001/movies?searchQuery=Seattle
+
+  getMovieData = async function(){
+    try {
+      let movieData = await axios.get(`${process.env.REACT_APP_SERVER}/movies?city=${this.state.city}`)
+      console.log(movieData);
+      this.setState({
+        movieError: false,
+        movieData: movieData.data
+      })
+    } catch (error) {
+      this.setState({
+        movieError: true,
+        movieErrorMessage: `A movie error has occurred.`
       })
     }
   }
@@ -92,10 +110,8 @@ class App extends React.Component {
         <CityInput
           handleCityInput={this.handleCityInput}
           getCityData={this.getCityData}
-          handleSubmit={this.handleSubmit}
+          // handleSubmit={this.handleSubmit}
         />
-        {/* <Movie
-        /> */}
         <Main
           cityData={this.state.cityData}
           map={this.state.mapData}
@@ -106,6 +122,11 @@ class App extends React.Component {
           />
         <Weather
         weatherData={this.state.weatherData}
+        errorMessage={this.state.weatherErrorMessage}
+        />
+        <Movie 
+        movieData={this.state.movieData}
+        errorMessage={this.state.movieErrorMessage}
         />
         <Footer
         />
